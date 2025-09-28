@@ -55,8 +55,8 @@ pipeline {
         }
 
         stage('Remote Docker Build & Deploy') {
-steps {
-    sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
+            steps {
+                sshagent (credentials: [env.SSH_CREDENTIALS_ID]) {
         sh """
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_HOST} << ENDSSH
     cd ${REMOTE_DIR} || exit 1
@@ -65,8 +65,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@$
     docker run -d --name ${CONTAINER_NAME} -p ${PORT}:${PORT} ${DOCKER_IMAGE}
 ENDSSH
 """
-    }
-}                }
+                }
             }
         }
     }
